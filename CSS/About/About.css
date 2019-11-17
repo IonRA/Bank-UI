@@ -1,0 +1,42 @@
+h1 {
+	text-align: center;
+}
+
+div.whoami {
+	margin: auto;
+	margin-bottom: 10%;
+	border: 3px solid #1abc9c;
+	padding: 10px;
+	width: 60%;
+	height: auto;
+	text-align: justify;
+	display: flex;
+}
+
+.members {
+	width: 30vw;
+	height: 40vh;
+}
+
+.team {
+	margin: 40px;
+}
+
+#bankgif {
+	margin-right: 10px;
+	width: 20%;
+}
+
+div.frames {
+	margin:40px;
+	text-align: center;
+}
+
+span {
+	font-size: 1.2em;
+}
+
+.bankframes {
+	width: 30%;
+	height: 30%;
+}

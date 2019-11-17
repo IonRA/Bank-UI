@@ -1,0 +1,38 @@
+img.slide {
+	width: 100%;
+	height: 60vh;
+}
+
+span.letterformat {
+	font-weight: bold;
+	font-family: Comic Sans MS, cursive, sans-serif;
+}
+
+.row {  
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.side {
+  flex: 30%;
+  background-color: #f1f1f1;
+  padding: 20px;
+}
+
+.main {   
+  flex: 70%;
+  background-color: white;
+  padding: 20px;
+}
+
+.slidespace {
+  background-color: #aaa;
+  width: 100%;
+  padding: 20px;
+}
+
+@media screen and (max-width: 700px) {
+  .row {   
+    flex-direction: column;
+  }
+}
