@@ -46,14 +46,12 @@
 		<div class="row">
 		
 			<div class="side">
+			
+				Choose color:<input type="color" id="colorsetter" value="#f1f1f1"><br>
 				
 				<div id="formContent">
 
-					<form id="loginform">
-						
-						
-						
-						
+					<form id="loginform" action="localhost:5000/submit-student" method="post">						
 						
 						<label for="gender" id="genderlabel"><b>Gender</b></label>
 						<select name="genderlist" name="gender" form="loginform">
@@ -82,6 +80,7 @@
 		</div>
 		
 		<script src="../Scripts/Shared/General.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 		<script src="../Scripts/Register/Register.js"></script>
 		
 	</body>

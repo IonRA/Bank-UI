@@ -1,6 +1,6 @@
 function addInputElement(pushOnTop, type, placeholder, name, id, value, checked) {
 
-	var inputElement = document.createElement("INPUT");
+	let inputElement = document.createElement("INPUT");
 	
 	inputElement.setAttribute("type", type);
 	
@@ -25,7 +25,7 @@ function addInputElement(pushOnTop, type, placeholder, name, id, value, checked)
 
 function addNewLine(pushOnTop) {
 	
-	var newLine = document.createElement("br");
+	let newLine = document.createElement("br");
 	
 	if (pushOnTop === true)
 		loginForm.insertBefore(newLine, loginForm.firstChild);
@@ -35,7 +35,7 @@ function addNewLine(pushOnTop) {
 
 function addText(pushOnTop, message) {
 	
-	var text = document.createTextNode(message);
+	let text = document.createTextNode(message);
 	
 	if (pushOnTop === true)
 		loginForm.insertBefore(text, loginForm.firstChild);
@@ -43,6 +43,120 @@ function addText(pushOnTop, message) {
 		loginForm.appendChild(text);
 }
 
+function addDonationRange() {
+	
+	let yesdonation = document.getElementById("yesdonation");
+	let noDonation = document.getElementById("nodonation");
+	let donationRange = document.createElement("INPUT");
+	
+	donationRange.setAttribute("type", "range");
+	donationRange.setAttribute("id", "donationrange");
+	loginForm.insertBefore(donationRange, noDonation.nextSibling.nextSibling.nextSibling);
+
+}
+
+function removeDonationRange() {
+
+	loginForm.removeChild(document.getElementById("donationrange"));
+}
+
+function sweetEmailCheck() {
+	
+	let email = document.getElementById("email").value;
+	let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    
+	if (!re.test(String(email).toLowerCase()))
+		Swal.fire({
+			title:'Error!',
+			text:'The e-mail is incorrect!',
+			type:'error',
+			confirmButtonText:'Ok'
+			});
+}
+
+function checkEmail() {
+	
+	let email = document.getElementById("email").value;
+	let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    
+	if (!re.test(String(email).toLowerCase()))
+		document.getElementById("email").reportValidity();
+}
+
+function changeBackgroundColor() {
+	
+	colorSetter = document.getElementById("colorsetter");
+	
+	document.getElementsByClassName("side")[0].style.backgroundColor = colorSetter.value;
+}
+
+function preventLogin(event) {
+	
+	if (document.getElementById("terms").checked === false)
+		event.preventDefault();
+}
+
+function saveUserData() {
+	
+	let xhttp = new XMLHttpRequest();
+	
+	xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("demo").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("POST", "demo_post.asp", true);
+  xhttp.send();
+}
+
+
+
+
+
+
+
+
+const contactForm = document.getElementById("loginform");
+
+contactForm.addEventListener("submit", function(event) {
+
+  event.preventDefault();
+
+	var request = new XMLHttpRequest();
+	var url = "http://localhost:5000/submit-data";
+	request.open("POST", url, true);
+	request.setRequestHeader("Content-Type", "application/json");
+	request.onreadystatechange = function () {
+		if (request.readyState === 4 && request.status === 200) {
+			var jsonData = JSON.parse(request.response);
+			console.log(jsonData);
+		}
+	};
+	var name =  document.getElementById("name").value;
+	var email = document.getElementById("email").value;
+	var password = document.getElementById("password").value;
+	
+
+
+	var data = JSON.stringify({"name": name, "email": email, "password": password});
+
+
+	request.send(data);
+
+});  
+
+
+
+
+
+
+
+
+
+
+
+
+//add in login form the input elements
 
 addInputElement(true, "password", "Repeat password", "repeat-password", "repeat-password");
 addInputElement(true, "password", "Password", "password", "password");
@@ -59,3 +173,12 @@ addText(false, "I agree with the terms and conditions");
 addNewLine(false);
 addNewLine(false);
 addInputElement(false, "submit", "Submit", "submit", "submit", "Log In");
+
+//set event listeners for important elements in login form
+
+document.getElementById("yesdonation").addEventListener("change", addDonationRange);
+document.getElementById("nodonation").addEventListener("change", removeDonationRange);
+document.getElementById("submit").addEventListener("click", function (){ setTimeout(sweetEmailCheck, 500);});
+document.getElementById("submit").addEventListener("click", preventLogin);
+document.getElementById("email").addEventListener("input", checkEmail);
+document.getElementById("colorsetter").addEventListener("change", changeBackgroundColor);
