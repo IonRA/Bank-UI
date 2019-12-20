@@ -114,7 +114,7 @@ function saveUserData() {
 
 
 
-
+//set ajax function to be called by submit button
 
 const contactForm = document.getElementById("loginform");
 
@@ -123,11 +123,11 @@ contactForm.addEventListener("submit", function(event) {
   event.preventDefault();
 
 	var request = new XMLHttpRequest();
-	var url = "http://localhost:5000/submit-data";
-	request.open("POST", url, true);
+	var url = "https://jsonplaceholder.typicode.com/posts";//"http://localhost:5000/submit-data";
+	request.open("GET", url, true);
 	request.setRequestHeader("Content-Type", "application/json");
 	request.onreadystatechange = function () {
-		if (request.readyState === 4 && request.status === 200) {
+		if (request.readyState === 4 && request.status >= 200 & request.status < 300) {
 			var jsonData = JSON.parse(request.response);
 			console.log(jsonData);
 		}
@@ -141,7 +141,7 @@ contactForm.addEventListener("submit", function(event) {
 	var data = JSON.stringify({"name": name, "email": email, "password": password});
 
 
-	request.send(data);
+	request.send();//data);
 
 });  
 
