@@ -3,11 +3,13 @@ var bodyParser = require('body-parser');
 var app = express();
 var path = require('path');
 var fs = require('fs');
+var cors = require('cors');
 
+app.use(cors());
 app.use(express.static(path.join(__dirname, '../src/HTML')));
 
-//initialize routes for the CRUD operations
 
+/*
 app.get('/show-user-data', function (req, res) {
         
 	let userDatabase = JSON.parse(fs.readFileSync("database/User.json"));
@@ -15,16 +17,20 @@ app.get('/show-user-data', function (req, res) {
 	
 	for (var i = 0; i < userDatabase.length; i++)
 		if (userDatabase[i].email === userEmail) {
-			userDatabase.remove(userDatabase[i]);
+			
 			res.send(JSON.stringfy(userDatabase[i]));
 			console.log('Get method has been called');
 			break;
 		}
 });
+*/
 
+//add new user in database
 app.post('/submit-data', function (req, res) {
 
-	let userDatabase = JSON.parse(fs.readFileSync("database/User.json"));
+
+	console.log(req.body);
+	let userDatabase = JSON.parse(fs.readFileSync(path.join(__dirname, "database/User")));
 	let userData = {
 						"name": req.body.name,
 						"email": req.body.email,
@@ -32,8 +38,10 @@ app.post('/submit-data', function (req, res) {
 					};
 		
 	userDatabase.psuh(userData);
+	
+	console.log(userData);
 
-	fs.writeFile("database/User.json", JSON.stringfy(userDatabase), function(err) {
+	fs.writeFile("database/User", JSON.stringfy(userDatabase), function(err) {
 		if (err) {
 			console.log(err);
 		}
@@ -43,6 +51,7 @@ app.post('/submit-data', function (req, res) {
 	res.send('Succes');
 });
 
+/*
 app.put('/update-data', function (req, res) {
 
 	let userDatabase = JSON.parse(fs.readFileSync("database/User.json"));
@@ -88,6 +97,7 @@ app.delete('/delete-data', function (req, res) {
 	console.log('Delete method has been called');
 	res.send('Succes');
 });
+*/
 
 var server = app.listen(5000, function () {
     console.log('Node server is running..');

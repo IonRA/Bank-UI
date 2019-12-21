@@ -1,6 +1,7 @@
 var index = 0;
 carousel();
 
+//swap images every 3 seconds
 function carousel() {
 	var i;
 	var slides = document.getElementsByClassName("slide");

@@ -4,12 +4,14 @@ function addInputElement(pushOnTop, type, placeholder, name, id, value, checked)
 	
 	inputElement.setAttribute("type", type);
 	
+	//check collision between radio and checkbox
 	if (checked !== undefined)
 		inputElement.checked = checked;
 		
 	inputElement.setAttribute("name", name);
 	inputElement.setAttribute("id", id);
 	
+	//check collision between value and placeholder
 	if (value !== undefined)
 		inputElement.setAttribute("value", value);
 	else
@@ -17,12 +19,15 @@ function addInputElement(pushOnTop, type, placeholder, name, id, value, checked)
 	
 	loginForm = document.getElementById("loginform");
 	
-	if (pushOnTop === true)
+	if (pushOnTop === true) {
 		loginForm.insertBefore(inputElement, loginForm.firstChild);
-	else
+	}
+	else {
 		loginForm.appendChild(inputElement);
+	}
 }
 
+//pushOnTop: boolean --> decides the palce of the element
 function addNewLine(pushOnTop) {
 	
 	let newLine = document.createElement("br");
@@ -65,6 +70,7 @@ function sweetEmailCheck() {
 	let email = document.getElementById("email").value;
 	let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     
+	//check validation for email
 	if (!re.test(String(email).toLowerCase()))
 		Swal.fire({
 			title:'Error!',
@@ -105,7 +111,7 @@ function saveUserData() {
       document.getElementById("demo").innerHTML = this.responseText;
     }
   };
-  xhttp.open("POST", "demo_post.asp", true);
+  xhttp.open("POST", "", true);
   xhttp.send();
 }
 
@@ -123,9 +129,11 @@ contactForm.addEventListener("submit", function(event) {
   event.preventDefault();
 
 	var request = new XMLHttpRequest();
-	var url = "https://jsonplaceholder.typicode.com/posts";//"http://localhost:5000/submit-data";
-	request.open("GET", url, true);
-	request.setRequestHeader("Content-Type", "application/json");
+	
+	
+	var url = "http://localhost:5000/submit-data";
+	request.open("POST", url, true);
+	request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	request.onreadystatechange = function () {
 		if (request.readyState === 4 && request.status >= 200 & request.status < 300) {
 			var jsonData = JSON.parse(request.response);
@@ -141,7 +149,7 @@ contactForm.addEventListener("submit", function(event) {
 	var data = JSON.stringify({"name": name, "email": email, "password": password});
 
 
-	request.send();//data);
+	request.send(data);
 
 });  
 
